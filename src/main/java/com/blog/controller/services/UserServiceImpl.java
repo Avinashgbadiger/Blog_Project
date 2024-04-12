@@ -11,6 +11,8 @@ import com.blog.model.User;
 import com.blog.repository.UserRepo;
 import com.blog.utils.UserDto;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Transactional
 	@Override
 	public UserDto createUser(UserDto userDto) {
 
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Transactional
 	@Override
 	public UserDto updateUser(UserDto userDto, int userId) {
 
@@ -46,6 +50,7 @@ public class UserServiceImpl implements UserService {
 		return userToDto;
 	}
 
+	@Transactional
 	@Override
 	public void deleteUser(int id) {
 		// TODO Auto-generated method stub

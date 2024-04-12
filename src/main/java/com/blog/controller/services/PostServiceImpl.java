@@ -18,6 +18,8 @@ import com.blog.utils.CatagoryDto;
 import com.blog.utils.PostDto;
 import com.blog.utils.UserDto;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -33,23 +35,23 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private ModelMapper mapper;
 
+	@Transactional
 	@Override
 	public PostDto saving(PostDto dto, Integer userId, Integer catagoryId) {
 		// TODO Auto-generated method stub
 		User user = this.userRepo.findById(userId)
-				.orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
-		Catagory catagory = this.catRepo.findById(catagoryId).orElseThrow(()->new ResourceNotFoundException("Catagory", "Id", catagoryId));
-		 
+				.orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+		Catagory catagory = this.catRepo.findById(catagoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "Id", catagoryId));
+
 		Post map = this.mapper.map(dto, Post.class);
-		   map.setAddDate(new Date());
-		   map.setImageName("default.png");
-		   map.setUser(user);
-		   map.setCatagory(catagory);
-		   
-		      
-		   
-		   PostDto map2 = this.mapper.map(map, PostDto.class);
-		
+		map.setAddDate(new Date());
+		map.setImageName("default.png");
+		map.setUser(user);
+		map.setCatagory(catagory);
+
+		PostDto map2 = this.mapper.map(map, PostDto.class);
+
 		return map2;
 	}
 
@@ -65,12 +67,14 @@ public class PostServiceImpl implements PostService {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public PostDto updatingPost(PostDto dto, int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public void deletePost(int id) {
 		// TODO Auto-generated method stub
@@ -79,14 +83,24 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDto> byUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		User orElseThrow = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "Id", userId));
+		List<PostDto> byCatagory = this.postRepo.getByUser(orElseThrow).stream()
+				.map((post) -> this.mapper.map(post, PostDto.class)).toList();
+
+		return byCatagory;
+
 	}
 
 	@Override
 	public List<PostDto> byCatagory(int catId) {
 		// TODO Auto-generated method stub
-		return null;
+		Catagory orElseThrow = this.catRepo.findById(catId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "Id", catId));
+		List<PostDto> byCatagory = this.postRepo.getByCatagory(orElseThrow).stream()
+				.map((post) -> this.mapper.map(post, PostDto.class)).toList();
+
+		return byCatagory;
 	}
 
 	@Override
@@ -95,7 +109,12 @@ public class PostServiceImpl implements PostService {
 		return null;
 	}
 
-	 
-	
-	 
+	public Post dtoToPost(PostDto dto) {
+		return this.mapper.map(dto, Post.class);
+	}
+
+	public PostDto postToDto(Post post) {
+		return this.mapper.map(post, PostDto.class);
+	}
+
 }
