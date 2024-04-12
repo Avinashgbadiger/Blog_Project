@@ -49,6 +49,7 @@ public class PostServiceImpl implements PostService {
 		      
 		   
 		   PostDto map2 = this.mapper.map(map, PostDto.class);
+		   System.out.println("This is Saving Post");
 		
 		return map2;
 	}
