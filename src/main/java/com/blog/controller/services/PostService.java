@@ -3,6 +3,7 @@ package com.blog.controller.services;
 import java.util.List;
 
 import com.blog.utils.PostDto;
+import com.blog.utils.PostResponse;
 
 public interface PostService {
 
@@ -13,7 +14,7 @@ public interface PostService {
 	public PostDto getPostById(int id);
 
 	// Get All Post
-	public List<PostDto> gettingAll();
+	public PostResponse gettingAll(Integer pageNumber,Integer pageSize);
 
 	// Update a Post
 	public PostDto updatingPost(PostDto dto, int id);

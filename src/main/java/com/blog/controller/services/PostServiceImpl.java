@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.Exception.ResourceNotFoundException;
@@ -16,6 +19,7 @@ import com.blog.repository.PostRepo;
 import com.blog.repository.UserRepo;
 import com.blog.utils.CatagoryDto;
 import com.blog.utils.PostDto;
+import com.blog.utils.PostResponse;
 import com.blog.utils.UserDto;
 
 import jakarta.transaction.Transactional;
@@ -57,27 +61,55 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostDto getPostById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		 Post orElseThrow = this.postRepo.findById(id)
+				 .orElseThrow(()-> new ResourceNotFoundException("Post", "Id", id));
+		 
+		return this.mapper.map(orElseThrow, PostDto.class);
 	}
 
 	@Override
-	public List<PostDto> gettingAll() {
+	public PostResponse gettingAll(Integer pageNumber,Integer pageSize) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Pageable of = PageRequest.of(pageNumber, pageSize);
+		Page<Post> findAll = this.postRepo.findAll(of);
+		 
+		 List<Post> content = findAll.getContent();
+		 List<PostDto> list = content.stream().map((p)->this.mapper.map(p, PostDto.class)).toList();
+				 PostResponse postResponse=new PostResponse();
+				 postResponse.
+				 setContent(findAll.getContent().stream()
+						 .map((p)-> this.mapper
+								 .map(p, PostDto.class)).toList());
+				 postResponse.setPageNumber(findAll.getNumber());
+				 postResponse.setPageSize(findAll.getSize());
+				 postResponse.setTotalElement(findAll.getTotalElements());
+				 postResponse.setTotalPages(findAll.getTotalPages());
+				 postResponse.setLastPage(findAll.isLast());
+						  
+				 
+		 
+		return postResponse;
 	}
 
 	@Transactional
 	@Override
 	public PostDto updatingPost(PostDto dto, int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Post orElseThrow = this.postRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Post", "Id", id));
+		Post map = this.mapper.map(dto, Post.class);
+		
+		Post save = this.postRepo.save(map);
+		
+		return this.mapper.map(save, PostDto.class);
 	}
 
 	@Transactional
 	@Override
 	public void deletePost(int id) {
 		// TODO Auto-generated method stub
+		
+		this.postRepo.deleteById(id);
 
 	}
 
