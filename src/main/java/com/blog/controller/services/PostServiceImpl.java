@@ -48,14 +48,22 @@ public class PostServiceImpl implements PostService {
 		Catagory catagory = this.catRepo.findById(catagoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "Id", catagoryId));
 
-		Post map = this.mapper.map(dto, Post.class);
-		map.setAddDate(new Date());
-		map.setImageName("default.png");
-		map.setUser(user);
-		map.setCatagory(catagory);
+ 
 
 		PostDto map2 = this.mapper.map(map, PostDto.class);
 
+
+		   map.setAddDate(new Date());
+		   map.setImageName("default.png");
+		   map.setUser(user);
+		   map.setCatagory(catagory);
+		   
+		      
+		   
+		   PostDto map2 = this.mapper.map(map, PostDto.class);
+		   System.out.println("This is Saving Post");
+		
+ 
 		return map2;
 	}
 
