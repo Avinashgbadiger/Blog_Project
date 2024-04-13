@@ -15,5 +15,8 @@ public interface UserService {
 	List<UserDto> getAllUser();
 
 	UserDto getUserById(int id);
+	
+	
+
 
 }

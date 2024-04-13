@@ -42,6 +42,7 @@ public class UserController {
 	public ResponseEntity<List<UserDto>> getAll() {
 
 		return ResponseEntity.ok(this.serviceImpl.getAllUser());
+		
 	}
 
 	@GetMapping("/{id}")

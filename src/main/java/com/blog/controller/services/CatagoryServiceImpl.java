@@ -11,6 +11,8 @@ import com.blog.model.Catagory;
 import com.blog.repository.CatagoryRepo;
 import com.blog.utils.CatagoryDto;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CatagoryServiceImpl implements CatagoryService {
 
@@ -33,6 +35,7 @@ public class CatagoryServiceImpl implements CatagoryService {
 		return this.converToDto(orElseThrow);
 	}
 
+	@Transactional
 	@Override
 	public CatagoryDto saving(CatagoryDto dto) {
 		Catagory convertToCatagory = this.convertToCatagory(dto);
@@ -40,6 +43,7 @@ public class CatagoryServiceImpl implements CatagoryService {
 		return this.converToDto(save);
 	}
 
+	@Transactional
 	@Override
 	public CatagoryDto updateCatagory(CatagoryDto dto,int id) {
 		Catagory orElseThrow = this.caRepo.findById(id)
@@ -50,7 +54,8 @@ public class CatagoryServiceImpl implements CatagoryService {
 		CatagoryDto converToDto = this.converToDto(orElseThrow);
 		 return converToDto;
 	}
-
+ 
+	@Transactional
 	@Override
 	public void deleteCatagory(int id) {
 		Catagory orElseThrow = this.caRepo.findById(id)
