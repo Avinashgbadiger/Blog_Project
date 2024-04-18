@@ -11,17 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.Exception.ResourceNotFoundException;
-import com.blog.controller.services.PostService;
 import com.blog.model.Catagory;
 import com.blog.model.Post;
 import com.blog.model.User;
 import com.blog.repository.CatagoryRepo;
 import com.blog.repository.PostRepo;
 import com.blog.repository.UserRepo;
-import com.blog.utils.CatagoryDto;
 import com.blog.utils.PostDto;
 import com.blog.utils.PostResponse;
-import com.blog.utils.UserDto;
 
 import jakarta.transaction.Transactional;
 

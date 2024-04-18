@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.controller.services.CatagoryService;
+import com.blog.service.CatagoryService;
 import com.blog.utils.ApiResponse;
 import com.blog.utils.CatagoryDto;
 
