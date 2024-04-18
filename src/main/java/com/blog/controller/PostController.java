@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.controller.services.PostService;
+import com.blog.service.PostService;
 import com.blog.utils.ApiResponse;
 import com.blog.utils.PostDto;
 import com.blog.utils.PostResponse;

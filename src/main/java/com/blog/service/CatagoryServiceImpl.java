@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.blog.Exception.ResourceNotFoundException;
-import com.blog.controller.services.CatagoryService;
 import com.blog.model.Catagory;
 import com.blog.repository.CatagoryRepo;
 import com.blog.utils.CatagoryDto;
